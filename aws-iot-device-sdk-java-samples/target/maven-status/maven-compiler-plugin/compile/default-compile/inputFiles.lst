@@ -1,0 +1,10 @@
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/pubSub/TestTopicListener.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/sampleUtil/CommandArguments.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/shadow/ConnectedWindow.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/shadow/ShadowSample.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/shadowEcho/ShadowEchoSample.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/pubSub/PublishSubscribeSample.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/pubSub/NonBlockingPublishListener.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/sampleUtil/PrivateKeyReader.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/shadowEcho/Thing.java
+/Users/caoimhemalone/Downloads/aws-iot-device-sdk-java-master/aws-iot-device-sdk-java-samples/src/main/java/com/amazonaws/services/iot/client/sample/sampleUtil/SampleUtil.java

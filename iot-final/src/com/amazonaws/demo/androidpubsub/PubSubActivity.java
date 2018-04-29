@@ -45,16 +45,18 @@ public class PubSubActivity extends Activity {
 
     static final String LOG_TAG = PubSubActivity.class.getCanonicalName();
 
+    String topic = "caoimhesiotfinal";
+
     // --- Constants to modify per your configuration ---
 
     // IoT endpoint
     // AWS Iot CLI describe-endpoint call returns: XXXXXXXXXX.iot.<region>.amazonaws.com
-    private static final String CUSTOMER_SPECIFIC_ENDPOINT = "CHANGE_ME";
+    private static final String CUSTOMER_SPECIFIC_ENDPOINT = "a17y717e4a92so.iot.us-east-1.amazonaws.com";
     // Cognito pool ID. For this app, pool needs to be unauthenticated pool with
     // AWS IoT permissions.
-    private static final String COGNITO_POOL_ID = "CHANGE_ME";
+    private static final String COGNITO_POOL_ID = "us-east-1:ca512131-53e9-4993-85a8-121f2c465f28";
     // Name of the AWS IoT policy to attach to a newly created certificate
-    private static final String AWS_IOT_POLICY_NAME = "CHANGE_ME";
+    private static final String AWS_IOT_POLICY_NAME = "iotfinalpolicy";
 
     // Region of AWS IoT
     private static final Regions MY_REGION = Regions.US_EAST_1;
