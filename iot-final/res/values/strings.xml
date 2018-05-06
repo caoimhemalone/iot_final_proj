@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">AndroidPubSub</string>
+    <string name="app_name">IOT Final Project</string>
+    <string name="info"> Information Centre </string>
+    <string name="clock"> Clock </string>
+    <string name="alarm"> Alarm </string>
+    <string name="timer">Timer</string>
+    <string name="weather"> Weather </string>
+    <string name="title">Select a function</string>
+    <string name="start">Start</string>
 </resources>

@@ -1,15 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="3dp" >
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/title"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginStart="30dp"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/title">
+
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+           >
+
+
+            <!--Information Centre Button-->
+            <Button
+                android:id="@+id/infoBTN"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="@string/info"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:background="@color/colorAccent"
+                android:switchMinWidth="65dp"
+                android:textColor="#fff"
+                />
+
+            <!--Clock Button-->
+            <Button
+                android:id="@+id/clockBTN"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+
+                android:layout_weight="1"
+                android:text="@string/clock"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:background="@color/turq"
+                android:switchMinWidth="65dp"
+                android:textColor="#fff"/>
+
+            <!--Alarm Button-->
+            <Button
+                android:id="@+id/alarmBTN"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:onClick="onClick"
+                android:switchMinWidth="65dp"
+                android:text="@string/alarm"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!--Timer Button-->
+            <Button
+                android:id="@+id/timerBTN"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="@string/timer"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:background="@color/colorPrimaryDark"
+                android:switchMinWidth="65dp"
+                android:textColor="#fff"/>
+
+            <!--Weather button -->
+            <Button
+                android:id="@+id/tempBTN"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:switchMinWidth="65dp"
+                android:text="@string/weather"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:background="@color/purple"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="33dp"
+        android:max="10"
+        android:progress="2" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:layout_below="@id/seekBar"/>
+
+    <TextView
+        android:id="@+id/messageTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/seekBar"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/messageTV"
+        android:id="@+id/clientLayout">
 
         <TextView
             android:layout_width="0dp"
@@ -29,7 +173,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/clientLayout"
+        android:id="@+id/tvlayout">
 
         <TextView
             android:layout_width="0dp"
@@ -50,7 +196,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/seekBar"
+        android:id="@+id/btnlayout"
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/btnConnect"
@@ -72,7 +221,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/seekBar"
+        android:layout_marginTop="150dp"
+        android:id="@+id/sublayout">
 
         <EditText
             android:id="@+id/txtSubcribe"
@@ -93,7 +245,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/sublayout"
+        android:id="@+id/messagelayout">
 
         <TextView
             android:layout_width="0dp"
@@ -114,7 +268,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/messagelayout"
+        android:id="@+id/topiclayout">
 
         <TextView
             android:layout_width="0dp"
@@ -135,7 +291,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@id/topiclayout"
+        android:id="@+id/lastmessagelayout">
 
         <TextView
             android:layout_width="0dp"
@@ -157,6 +315,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="Publish" />
+        android:text="Publish"
+        android:layout_below="@id/lastmessagelayout"/>
 
-</LinearLayout>
+
+
+
+</RelativeLayout>
+

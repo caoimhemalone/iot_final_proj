@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroidPubSub</string>
+    <color name="colorAccent">#B1ED2F</color>
+    <color name="colorPrimary">#ED2F52</color>
+    <color name="colorPrimaryDark">#f49d41</color>
+    <color name="purple">#6B2FED</color>
+    <color name="turq">#2FEDCA</color>
+    <string name="alarm"> Alarm </string>
+    <string name="app_name">IOT Final Project</string>
+    <string name="clock"> Clock </string>
+    <string name="info"> Information Centre </string>
+    <string name="start">Start</string>
+    <string name="timer">Timer</string>
+    <string name="title">Select a function</string>
+    <string name="weather"> Weather </string>
 </resources>
