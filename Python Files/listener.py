@@ -30,7 +30,7 @@ import getopt
 
 # Custom MQTT message callback
 def customCallback(client, userdata, message):
-    global  led1_state, led2_state, led3_state, cam_state, temp_state, reply, led1_thread, led2_thread, led3_thred, cam_thread, temp_thread
+    global  clock_state, alarm_state, timer_state, temp_state, reply, clock_thread, alarm_thread, timer_thred, temp_thread
 
     print("Received a new message: ")
     print(message.payload)
@@ -45,58 +45,44 @@ def customCallback(client, userdata, message):
         sleep_time = 2        
     print should_publish
 if should_publish == "true":
-# show hum and temp
+# show and temp
     temp_state = True
     if not publisher.is_alive():
       publisher = Thread(target=Temp_Method)
       publisher.start()
-elif should_publish == "led1":
-  # start the blue method thread
-    led1_state = True
-    if not led1.is_alive():
-          led1 = Thread(target=Blue_Method)
-    led1.start()
-elif should_publish == "led2":
-       # start the green method thread
-    led2_state = True
-    if not led2.is_alive():
-            led2 = Thread(target=Green_Method)
-    led2.start()
-elif should_publish == "led3":
-      # start the red method thread
-    led3_state = True
-    if not led3.is_alive():
-        led3 = Thread(target=Red_Method)
-    led3.start()
-elif should_publish == "cam":
-  # start the camera thread
-  # cam_state = True
-  # if not cam.is_alive():
-  #   cam = Thread(target=Camera_Method)
-  # cam.start()
-elif should_publish == "temp":
-  # start the temp method thread
-  temp_state = True
-  if not temp.is_alive():
-    temp = Thread(target=Temp_Method)
-  temp.start()
+elif should_publish == "clock":
+  # start the clock method thread
+    clock_state = True
+    if not clock.is_alive():
+          clock = Thread(target=Clock_Method)
+    clock.start()
+elif should_publish == "alarm":
+       # start the alarm method thread
+    alarm_state = True
+    if not alarm.is_alive():
+            alarm = Thread(target=Alarm_Method)
+    alarm.start()
+elif should_publish == "timer":
+      # start the timer method thread
+    timer_state = True
+    if not timer.is_alive():
+        timer = Thread(target=Timer_Method)
+    timer.start()
 
-elif should_publish =="led1_off":
-  led1_state = False;
-elif should_publish =="led2_off":
-  led2_state = False;
-elif should_publish =="led3_off":
-  led3_state = False;
-# elif should_publish =="cam_off":
-#   cam_state == False;
+
+elif should_publish =="clock_off":
+  clock_state = False;
+elif should_publish =="alarm_off":
+  alarm_state = False;
+elif should_publish =="timer_off":
+  timer_state = False;
 elif should_publish == "temp_off":
   temp_state = False;
 
 else:
-    led1_state = False;
-    led2_state = False;
-    led3_state = False;
-    # cam_state = False;
+    clock_state = False;
+    alarm_state = False;
+    timer_state = False;
     temp_state = False;
 
     print "Wasn't true"
@@ -177,7 +163,7 @@ sleep_time = 1
 
 led1sensor = 2
 
-dht_sensor_port = 8
+dht_sensor_port = 7
 buzzer = 4
 button = 3
 
@@ -187,14 +173,14 @@ temp_state = False;
 thingName = "caoimhesiotfinal"
 reply = ""
 timeSleep = time.sleep(1)
-
+setRGB(0,255,0)
 
               #Sensor Code 
 
 
-#For Blue LED
-def Blue_Method():
-  while led1_state:
+#For Clock
+def Clock_Method():
+  while clock_state:
       try:
           digitalWrite(buzzer, 1)
           time.sleep(.5)
@@ -227,31 +213,61 @@ def Blue_Method():
 #For alarm
 # buzzer on countdown, button to turn it off
 
-#For temp
+#For temp & hum
 def Temp_Method():
   while temp_state:
-      try:
-          [temp, hum] = dht(dht_sensor_port, 0)
-          time.sleep(5)
-          if math.isnan(temp):
-              temp = 0
-          result = myAWSIoTMQTTClient.publish("raspberryPI", temp, 1)
-      except (IOError, TypeError) as e:
-          print "Error", e
-      print "Temp Ending"
+      # try:
+      #     [temp, hum] = dht(dht_sensor_port, 0)
+      #     time.sleep(5)
+      #     if math.isnan(temp):
+      #         temp = 0
+      #     result = myAWSIoTMQTTClient.publish("raspberryPI", temp, 1)
+      # except (IOError, TypeError) as e:
+      #     print "Error", e
+      # print "Temp Ending"
+
+try:
+        # get the temperature and Humidity from the DHT sensor
+    [ temp,hum ] = dht(dht_sensor_port,dht_sensor_type)
+    print("temp =", temp, "C\thumidity =", hum,"%")
+
+    # check if we have nans
+    # if so, then raise a type error exception
+    if isnan(temp) is True or isnan(hum) is True:
+      raise TypeError('nan error')
+
+    t = str(temp)
+    h = str(hum)
+
+        # instead of inserting a bunch of whitespace, we can just insert a \n
+        # we're ensuring that if we get some strange strings on one line, the 2nd one won't be affected
+    setText_norefresh("Temp:" + t + "C\n" + "Humidity :" + h + "%")
+
+  except (IOError, TypeError) as e:
+    print(str(e))
+    # and since we got a type error
+    # then reset the LCD's text
+    setText("")
+
+  except KeyboardInterrupt as e:
+    print(str(e))
+    # since we're exiting the program
+    # it's better to leave the LCD with a blank text
+    setText("")
+    break
+
+  # wait some 
 
 
 
 
-
-led1_thread = Thread(target=Blue_Method)
-led2_thread = Thread(target=Green_Method)
-led3_thred = Thread(target=Red_Method)
-cam_thread = Thread(target=Camera_Method)
+clock_thread = Thread(target=Clock_Method)
+alarm_thread = Thread(target=Alarm_Method)
+timer_thred = Thread(target=Timer_Method)
 temp_thread = Thread(target=Temp_Method)
 
 
-listener_thread = Thread(target=listener, args=(publisher_thread, temp_thread, hum_thread, led_thread, buzz_thread, every_thread, led_and_buzz_thread,))
+listener_thread = Thread(target=listener, args=(publisher_thread, temp_thread, clock_thread, alarm_thread, ))
 listener_thread.start()
 
 while True:
