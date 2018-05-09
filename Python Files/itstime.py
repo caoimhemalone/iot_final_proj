@@ -12,32 +12,29 @@ from time import strftime
 import sys
 import os
 
-
-#Sensor connected to A0 Port 
+ 
 sensor = 1
 button = 3
 buzzer = 2
 dht_sensor = 4
-# light_sensor = 0
 led = 6
 grovepi.pinMode(sensor,"INPUT")
 grovepi.pinMode(button,"INPUT")
 grovepi.pinMode(buzzer,"OUTPUT")
-# grovepi.pinMode(light_sensor,"INPUT")
 grovepi.pinMode(led,"OUTPUT")
 
-filesveglia = open('/home/pi/Desktop/iot-final/python_files/sveglia.txt','r')
-onoffsveglia = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','r')
-orasveglia = str(filesveglia.readline())
-oraonoff = str(onoffsveglia.readline())
-filesveglia.close()
-onoffsveglia.close()
+filesalarm = open('/home/pi/Desktop/iot-final/python_files/alarms.txt','r')
+onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','r')
+settingalarm = str(filesalarm.readline())
+settingonoff = str(onoffalarm.readline())
+filesalarm.close()
+onoffalarm.close()
 
 grovepi.digitalWrite(buzzer,0)
 
 
-print orasveglia
-print oraonoff
+print settingalarm
+print settingonoff
 
 def restart_program():
 		python = sys.executable
@@ -50,28 +47,21 @@ while True:
 		[temp,humidity] = grovepi.dht(dht_sensor,0)
 		temp = str(temp)
 		humidity = str(humidity)
-		# lsensor_value = grovepi.analogRead(light_sensor)
-		# lsensor_value = lsensor_value / 2
-		# if lsensor_value >= 255:
-		# 	lsensor_value = 255
-		# if lsensor_value <= 5:
-  #                       lsensor_value = 5
-		# print lsensor_value
-		giorno = strftime("%d-%m-%Y")
-		orario = strftime("%H:%M")
-		if oraonoff == "1":
-			grovepi.analogWrite(led,lsensor_value)
+		date = strftime("%d-%m-%Y")
+		time = strftime("%H:%M")
+		if settingonoff == "1":
+			grovepi.analogWrite(led,1)
 		else:
 			grovepi.analogWrite(led,0)
 	    	setRGB(0,0,255)
-	    	setText(str(giorno + " " + temp + "C\n" + oraonoff + "  *" + orario + "* " + humidity + "%"))
-	    	print giorno + orario
-	    	if orario == orasveglia and oraonoff == "1":
-			onetoten = range(0,5)
-		    	for count in onetoten:
+	    	setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + time + "* " + humidity + "%"))
+	    	print date + time
+	    	if time == settingalarm and settingonoff == "1":
+			alarmrange = range(0,5)
+		    	for count in alarmrange:
 				grovepi.digitalWrite(buzzer,0)
 				setRGB(200,5,5)
-				setText(" W A K E   U P \n   IT'S  " + orasveglia)
+				setText(" W A K E   U P \n   IT'S  " + settingalarm)
 				grovepi.digitalWrite(buzzer,1)
 				time.sleep(.1)
 				setRGB(0,5,5)
@@ -83,14 +73,14 @@ while True:
 				setRGB(0,5,5)
 				grovepi.digitalWrite(buzzer,0)
 				if grovepi.digitalRead(button):
-					orario = strftime("%H:%M")
-					setRGB(0,0,lsensor_value)
-                			setText(str(giorno + " " + temp + "C\n" + oraonoff + "  *" + orario + "* " + humidity + "%"))
+					time = strftime("%H:%M")
+					setRGB(0,0,255)
+                			setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + time + "* " + humidity + "%"))
                                 	time.sleep(60) # snooze time
-					onetoth = range(0,3)
-					for count in onetoth:
-						onetoten = range(0,10)
-						for count in onetoten:
+					snoozerange = range(0,3)
+					for count in snoozerange:
+						alarmrange = range(0,10)
+						for count in alarmrange:
                 	                		setRGB(200,5,5)
                         	        		setText("  ARE YOU STILL\n   IN BED?")
                                 			grovepi.digitalWrite(buzzer,1)
@@ -129,17 +119,17 @@ for count in menu:
 		onoff = str(int(sensor_value / 512))
 		if onoff == "0" and grovepi.digitalRead(button):
 			setText("ALERT OFF")
-			onoffsveglia = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
-			onoffsveglia.write("0")
-			onoffsveglia.close()
+			onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
+			onoffalarm.write("0")
+			onoffalarm.close()
 			time.sleep(1)
                         restart_program()
 			
 		if onoff == "1" and grovepi.digitalRead(button):
                         setText("ALERT ON")
-			onoffsveglia = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
-                        onoffsveglia.write("1")
-                        onoffsveglia.close()
+			onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
+                        onoffalarm.write("1")
+                        onoffalarm.close()
 			time.sleep(1)
 			while True:
 				try:
@@ -156,9 +146,9 @@ for count in menu:
 				    			try:
 								if grovepi.digitalRead(button):
 									time.sleep(1)
-									selora = str(" SETTED HOUR:\n      " + whour)
+									sethour = str(" SETTED HOUR:\n      " + whour)
 									setRGB(0,255,255)
-									setText(selora)
+									setText(sethour)
 									time.sleep(1)
 									setRGB(200,20,255)
 									setText("   SET MINUTE")
@@ -168,22 +158,22 @@ for count in menu:
 	
 											if grovepi.digitalRead(button):
 												time.sleep(1)
-												sveglia = str("  WAKE UP AT\n    " + whour + ":" + wmin)
-												print sveglia
+												alarm = str("  WAKE UP AT\n    " + whour + ":" + wmin)
+												print alarm
 												setRGB(0,255,255)
 												setText(" SETTED MINUTE:\n    " + wmin)
 												time.sleep(1)
-												setText(sveglia)
+												setText(alarm)
 												time.sleep(1)
-												filesveglia = open('/home/pi/Desktop/iot-final/python_files/sveglia.txt','w')
-												filesveglia.write(whour + ":" + wmin)
-												filesveglia.close()
+												filesalarm = open('/home/pi/Desktop/iot-final/python_files/alarms.txt','w')
+												filesalarm.write(whour + ":" + wmin)
+												filesalarm.close()
 												time.sleep(1)
 												restart_program()
 											sensor_value = grovepi.analogRead(sensor)
 											setRGB(255,0,255)
-											minuti = int(sensor_value / 17.1)
-											wmin = str("%02d"%minuti)
+											minutes = int(sensor_value / 17.1)
+											wmin = str("%02d"%minutes)
 											setText(wmin)
 											time.sleep(.1)
 										except IOError:
@@ -200,7 +190,7 @@ for count in menu:
 
 					if onoff >= "1" and grovepi.digitalRead(button):
 						setRGB(100,20,255)
-						setText("    WAKE UP AT:\n    " + orasveglia)
+						setText("    WAKE UP AT:\n    " + settingalarm)
 						time.sleep(2)
 						restart_program()
 				except IOError:
