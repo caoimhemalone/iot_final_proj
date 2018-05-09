@@ -1,9 +1,5 @@
-##### IT - IT'S TIME! by ACMECORPORATION
-##### THE RASPBERRY PI STAND ALONE ALARM CLOCK
-##### V. 1.3
-##### NEW OPTIONS: ON/OFF LED ALARM INDICATOR, 
-##### FIXED BACKLIGHT DISPLAY MINIMUM VALUE, FIXED BUG INTRODUCING TIME LIMITATION TO CHOOSE OPTIONS INTO PRIMARY MENU 
-#Grove Analog Read sensor example
+# Reference https://studio.dexterindustries.com/cwists/preview/432x
+
 import time
 from grove_rgb_lcd import *
 import grovepi
@@ -48,20 +44,21 @@ while True:
 		temp = str(temp)
 		humidity = str(humidity)
 		date = strftime("%d-%m-%Y")
-		time = strftime("%H:%M")
+		hourmintime = strftime("%H:%M")
 		if settingonoff == "1":
 			grovepi.analogWrite(led,1)
 		else:
 			grovepi.analogWrite(led,0)
 	    	setRGB(0,0,255)
-	    	setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + time + "* " + humidity + "%"))
-	    	print date + time
-	    	if time == settingalarm and settingonoff == "1":
+	    	setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + hourmintime + "* " + humidity + "%"))
+	    	print date + hourmintime
+	    	if hourmintime == settingalarm and settingonoff == "1":
 			alarmrange = range(0,5)
 		    	for count in alarmrange:
 				grovepi.digitalWrite(buzzer,0)
 				setRGB(200,5,5)
 				setText(" W A K E   U P \n   IT'S  " + settingalarm)
+				#Alarm goes off unless button held
 				grovepi.digitalWrite(buzzer,1)
 				time.sleep(.1)
 				setRGB(0,5,5)
@@ -72,10 +69,11 @@ while True:
 				time.sleep(.3)
 				setRGB(0,5,5)
 				grovepi.digitalWrite(buzzer,0)
+				#If the button is pressed snooze starts 60 seconds later
 				if grovepi.digitalRead(button):
-					time = strftime("%H:%M")
+					hourmintime = strftime("%H:%M")
 					setRGB(0,0,255)
-                			setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + time + "* " + humidity + "%"))
+                			setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + hourmintime + "* " + humidity + "%"))
                                 	time.sleep(60) # snooze time
 					snoozerange = range(0,3)
 					for count in snoozerange:
@@ -146,7 +144,7 @@ for count in menu:
 				    			try:
 								if grovepi.digitalRead(button):
 									time.sleep(1)
-									sethour = str(" SETTED HOUR:\n      " + whour)
+									sethour = str(" HOUR SET:\n      " + whour)
 									setRGB(0,255,255)
 									setText(sethour)
 									time.sleep(1)
@@ -161,7 +159,7 @@ for count in menu:
 												alarm = str("  WAKE UP AT\n    " + whour + ":" + wmin)
 												print alarm
 												setRGB(0,255,255)
-												setText(" SETTED MINUTE:\n    " + wmin)
+												setText(" MINUTE SET:\n    " + wmin)
 												time.sleep(1)
 												setText(alarm)
 												time.sleep(1)
