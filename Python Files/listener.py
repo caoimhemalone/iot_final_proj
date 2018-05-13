@@ -3,6 +3,11 @@ import dweepy, time, random, math,
 import json
 from grovepi import *
 from time import sleep, gmtime, strftime
+from grove_rgb_lcd import *
+import grovepi
+import datetime
+import sys
+import os
 
 from threading import Thread
 
@@ -30,7 +35,7 @@ import getopt
 
 # Custom MQTT message callback
 def customCallback(client, userdata, message):
-    global  clock_state, alarm_state, timer_state, temp_state, reply, clock_thread, alarm_thread, timer_thred, temp_thread
+    global  clock_state,  temp_state, reply, clock_thread,  temp_thread
 
     print("Received a new message: ")
     print(message.payload)
@@ -56,33 +61,17 @@ elif should_publish == "clock":
     if not clock.is_alive():
           clock = Thread(target=Clock_Method)
     clock.start()
-elif should_publish == "alarm":
-       # start the alarm method thread
-    alarm_state = True
-    if not alarm.is_alive():
-            alarm = Thread(target=Alarm_Method)
-    alarm.start()
-elif should_publish == "timer":
-      # start the timer method thread
-    timer_state = True
-    if not timer.is_alive():
-        timer = Thread(target=Timer_Method)
-    timer.start()
+
+
 
 
 elif should_publish =="clock_off":
   clock_state = False;
-elif should_publish =="alarm_off":
-  alarm_state = False;
-elif should_publish =="timer_off":
-  timer_state = False;
 elif should_publish == "temp_off":
   temp_state = False;
 
 else:
     clock_state = False;
-    alarm_state = False;
-    timer_state = False;
     temp_state = False;
 
     print "Wasn't true"
@@ -161,14 +150,37 @@ loopCount = 0
 
 sleep_time = 1
 
-led1sensor = 2
-
-dht_sensor_port = 7
-buzzer = 4
+sensor = 1
 button = 3
+buzzer = 2
+dht_sensor = 4
+led = 6
+grovepi.pinMode(sensor,"INPUT")
+grovepi.pinMode(button,"INPUT")
+grovepi.pinMode(buzzer,"OUTPUT")
+grovepi.pinMode(led,"OUTPUT")
+
+filesalarm = open('/home/pi/Desktop/iot-final/python_files/alarms.txt','r')
+onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','r')
+settingalarm = str(filesalarm.readline())
+settingonoff = str(onoffalarm.readline())
+filesalarm.close()
+onoffalarm.close()
+
+grovepi.digitalWrite(buzzer,0)
+
+
+print settingalarm
+print settingonoff
+
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+last_sound = 0
 
 alarm_state = False;
-timer_state = False;
+clock_state = False;
 temp_state = False;
 thingName = "caoimhesiotfinal"
 reply = ""
@@ -181,31 +193,164 @@ setRGB(0,255,0)
 #For Clock
 def Clock_Method():
   while clock_state:
-      try:
-          digitalWrite(buzzer, 1)
+    try:
+    [temp,humidity] = grovepi.dht(dht_sensor,0)
+    temp = str(temp)
+    humidity = str(humidity)
+    date = strftime("%d-%m-%Y")
+    hourmintime = strftime("%H:%M")
+    if settingonoff == "1":
+      grovepi.analogWrite(led,1)
+    else:
+      grovepi.analogWrite(led,0)
+        setRGB(0,0,255)
+        setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + hourmintime + "* " + humidity + "%"))
+        print date + hourmintime
+        if hourmintime == settingalarm and settingonoff == "1":
+      alarmrange = range(0,5)
+          for count in alarmrange:
+        grovepi.digitalWrite(buzzer,0)
+        setRGB(200,5,5)
+        setText(" W A K E   U P \n   IT'S  " + settingalarm)
+        #Alarm goes off unless button held
+        grovepi.digitalWrite(buzzer,1)
+        time.sleep(.1)
+        setRGB(0,5,5)
+        grovepi.digitalWrite(buzzer,0)
+        time.sleep(.1)
+        setRGB(200,5,5)
+        grovepi.digitalWrite(buzzer,1)
+        time.sleep(.3)
+        setRGB(0,5,5)
+        grovepi.digitalWrite(buzzer,0)
+        #If the button is pressed snooze starts 60 seconds later
+        if grovepi.digitalRead(button):
+          hourmintime = strftime("%H:%M")
+          setRGB(0,0,255)
+                      setText(str(date + " " + temp + "C\n" + settingonoff + "  *" + hourmintime + "* " + humidity + "%"))
+                                  time.sleep(60) # snooze time
+          snoozerange = range(0,3)
+          for count in snoozerange:
+            alarmrange = range(0,10)
+            for count in alarmrange:
+                                      setRGB(200,5,5)
+                                      setText("  ARE YOU STILL\n   IN BED?")
+                                      grovepi.digitalWrite(buzzer,1)
+              time.sleep(.1)
+              setRGB(0,5,5)
+              grovepi.digitalWrite(buzzer,0)
+                                                        time.sleep(.1)
+              setRGB(200,5,5)
+              grovepi.digitalWrite(buzzer,1)
+              time.sleep(.2)
+              setRGB(0,5,5)
+              grovepi.digitalWrite(buzzer,0)
+              if grovepi.digitalRead(button):
+                restart_program()
+                                      time.sleep(.5)
+          restart_program()           
+        grovepi.digitalWrite(buzzer,0)
+        time.sleep(.5)
+        time.sleep(5)
+        if grovepi.digitalRead(button):
+      time.sleep(1)
+      break
+
+        except (IOError,TypeError) as e:
+              print "Error"
+    restart_program()
+        
+#while True:
+menu = range(0,10)
+for count in menu:
+  try:
+    sensor_value = grovepi.analogRead(sensor)
+    setRGB(20,20,255)
+    setText(" < OFF     ON > ")
+    time.sleep(0.5)
+    onoff = str(int(sensor_value / 512))
+    if onoff == "0" and grovepi.digitalRead(button):
+      setText("ALERT OFF")
+      onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
+      onoffalarm.write("0")
+      onoffalarm.close()
+      time.sleep(1)
+                        restart_program()
+      
+    if onoff == "1" and grovepi.digitalRead(button):
+                        setText("ALERT ON")
+      onoffalarm = open('/home/pi/Desktop/iot-final/python_files/onoff.txt','w')
+                        onoffalarm.write("1")
+                        onoffalarm.close()
+      time.sleep(1)
+      while True:
+        try:
+          sensor_value = grovepi.analogRead(sensor) 
+          setRGB(200,20,255)
+          setText(" < SET TIME\n ALREADY DONE > ")
           time.sleep(.5)
-          digitalWrite(buzzer, 0)
-          digitalWrite(led1sensor, 1)
-          time.sleep(1)
-          result = myAWSIoTMQTTClient.publish('raspberryPI', "Blue LED On", 1, "Temperature" , +temp)
-          print result
-            
+          onoff = str(int(sensor_value / 512))
+          if onoff == "0" and grovepi.digitalRead(button):
+            setRGB(200,20,255)
+            setText("    SET HOUR")
+            time.sleep(1)
+            while True:
+                  try:
+                if grovepi.digitalRead(button):
+                  time.sleep(1)
+                  sethour = str(" HOUR SET:\n      " + whour)
+                  setRGB(0,255,255)
+                  setText(sethour)
+                  time.sleep(1)
+                  setRGB(200,20,255)
+                  setText("   SET MINUTE")
+                  time.sleep(1)
+                  while True:
+                    try:
+  
+                      if grovepi.digitalRead(button):
+                        time.sleep(1)
+                        alarm = str("  WAKE UP AT\n    " + whour + ":" + wmin)
+                        print alarm
+                        setRGB(0,255,255)
+                        setText(" MINUTE SET:\n    " + wmin)
+                        time.sleep(1)
+                        setText(alarm)
+                        time.sleep(1)
+                        filesalarm = open('/home/pi/Desktop/iot-final/python_files/alarms.txt','w')
+                        filesalarm.write(whour + ":" + wmin)
+                        filesalarm.close()
+                        time.sleep(1)
+                        restart_program()
+                      sensor_value = grovepi.analogRead(sensor)
+                      setRGB(255,0,255)
+                      minutes = int(sensor_value / 17.1)
+                      wmin = str("%02d"%minutes)
+                      setText(wmin)
+                      time.sleep(.1)
+                    except IOError:
+                      print "Error"
+                sensor_value = grovepi.analogRead(sensor)
+                setRGB(0,0,255)
+                ora = int(sensor_value / 44.478)
+                whour = str("%02d"%ora)
+                setText(whour) 
+                time.sleep(.3)
 
-          digitalWrite(led1sensor, 0)
-          digitalWrite(buzzer, 0)
-          result = myAWSIoTMQTTClient.publish('raspberryPI', "Blue LED Off" , 0)
-          print result
-            
+                  except IOError:
+                      print "Error"
 
-      except KeyboardInterrupt:
-              digitalWrite(led1sensor,0)
-              digitalWrite(buzzer, 0)
-              break
-
-      except (IOError, TypeError) as e:
-          print "Error", e
-          
-      print "Blue LED ending"
+          if onoff >= "1" and grovepi.digitalRead(button):
+            setRGB(100,20,255)
+            setText("    WAKE UP AT:\n    " + settingalarm)
+            time.sleep(2)
+            restart_program()
+        except IOError:
+                      print "Error"
+    time.sleep(1)   
+  except (IOError,TypeError) as e:
+                print "Error"
+                restart_program()
 
 #For timer
       # buzzer on countdown, button to turn it off
@@ -262,12 +407,10 @@ try:
 
 
 clock_thread = Thread(target=Clock_Method)
-alarm_thread = Thread(target=Alarm_Method)
-timer_thred = Thread(target=Timer_Method)
 temp_thread = Thread(target=Temp_Method)
 
 
-listener_thread = Thread(target=listener, args=(publisher_thread, temp_thread, clock_thread, alarm_thread, ))
+listener_thread = Thread(target=listener, args=(publisher_thread, temp_thread, clock_thread, ))
 listener_thread.start()
 
 while True:

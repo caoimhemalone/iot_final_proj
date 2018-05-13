@@ -1,5 +1,7 @@
 package com.amazonaws;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +35,7 @@ public class home extends Activity {
 
     static final String LOG_TAG = home.class.getCanonicalName();
 
-    String topic = "caoimhesiotfonal";
+    String topic = "caoimhesiotfinal";
 
     int time;
     // --- Constants to modify per your configuration ---
@@ -43,7 +45,7 @@ public class home extends Activity {
     private static final String CUSTOMER_SPECIFIC_ENDPOINT = "a17y717e4a92so.iot.us-east-1.amazonaws.com";
     // Cognito pool ID. For this app, pool needs to be unauthenticated pool with
     // AWS IoT permissions.
-    private static final String COGNITO_POOL_ID = "us-east-1:ca512131-53e9-4993-85a8-121f2c465f28";
+    private static final String COGNITO_POOL_ID = "us-east-1:03d9cb01-84da-4647-a7e3-9b0e342666bc";
     // Name of the AWS IoT policy to attach to a newly created certificate
     private static final String AWS_IOT_POLICY_NAME = "iotfinalpolicy";
 
@@ -98,11 +100,11 @@ public class home extends Activity {
         clock = (Button) findViewById(R.id.clockBTN);
         clock.setOnClickListener(clockClick);
 
-        timer = (Button) findViewById(R.id.timerBTN);
-        timer.setOnClickListener(timerClick);
-
-        alarm = (Button) findViewById(R.id.alarmBTN);
-        alarm.setOnClickListener(alarmClick);
+//        timer = (Button) findViewById(R.id.timerBTN);
+//        timer.setOnClickListener(timerClick);
+//
+//        alarm = (Button) findViewById(R.id.alarmBTN);
+//        alarm.setOnClickListener(alarmClick);
 
 
         timeTV = (TextView) findViewById(R.id.time);
@@ -387,27 +389,27 @@ public class home extends Activity {
 
         }
     };
-
-    View.OnClickListener alarmClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            JSONObject json = new JSONObject();
-            try{
-                json.put("publish", "alarm");
-            } catch (JSONException e) {
-                Log.e(LOG_TAG, "Publish Error.", e);
-            }
-
-            try {
-                mqttManager.publishString(json.toString(), topic, AWSIotMqttQos.QOS0);
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Publish error.", e);
-            }
-
-
-        }
-    };
+//
+//    View.OnClickListener alarmClick = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//
+//            JSONObject json = new JSONObject();
+//            try{
+//                json.put("publish", "alarm");
+//            } catch (JSONException e) {
+//                Log.e(LOG_TAG, "Publish Error.", e);
+//            }
+//
+//            try {
+//                mqttManager.publishString(json.toString(), topic, AWSIotMqttQos.QOS0);
+//            } catch (Exception e) {
+//                Log.e(LOG_TAG, "Publish error.", e);
+//            }
+//
+//
+//        }
+//    };
 
     View.OnClickListener tempClick = new View.OnClickListener() {
         @Override
@@ -430,44 +432,36 @@ public class home extends Activity {
         }
     };
 
-
-    View.OnClickListener timerClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            JSONObject json = new JSONObject();
-            try{
-                json.put("publish", "timer");
-            } catch (JSONException e) {
-                Log.e(LOG_TAG, "Publish Error.", e);
-            }
-
-            try {
-                mqttManager.publishString(json.toString(), topic, AWSIotMqttQos.QOS0);
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Publish error.", e);
-            }
-
-
-        }
-    };
+//
+//    View.OnClickListener timerClick = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//
+//            JSONObject json = new JSONObject();
+//            try{
+//                json.put("publish", "timer");
+//            } catch (JSONException e) {
+//                Log.e(LOG_TAG, "Publish Error.", e);
+//            }
+//
+//            try {
+//                mqttManager.publishString(json.toString(), topic, AWSIotMqttQos.QOS0);
+//            } catch (Exception e) {
+//                Log.e(LOG_TAG, "Publish error.", e);
+//            }
+//
+//
+//        }
+//    };
 
     View.OnClickListener infoClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
-            JSONObject json = new JSONObject();
-            try{
-                json.put("publish", "info");
-            } catch (JSONException e) {
-                Log.e(LOG_TAG, "Publish Error.", e);
-            }
-
-            try {
-                mqttManager.publishString(json.toString(), topic, AWSIotMqttQos.QOS0);
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Publish error.", e);
-            }
+            String url = "https://smart-clock-example-caoimhemalone.c9users.io/index.php";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
 
 
         }

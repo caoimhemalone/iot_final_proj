@@ -15,7 +15,8 @@
         android:text="@string/title"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:layout_marginStart="30dp"/>
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"/>
 
 
     <LinearLayout
@@ -26,11 +27,11 @@
         android:layout_below="@+id/title">
 
 
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-           >
+        <!--<LinearLayout-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+           <!--&gt;-->
 
 
             <!--Information Centre Button-->
@@ -63,39 +64,39 @@
                 android:textColor="#fff"/>
 
             <!--Alarm Button-->
-            <Button
-                android:id="@+id/alarmBTN"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:onClick="onClick"
-                android:switchMinWidth="65dp"
-                android:text="@string/alarm"
-                android:textColor="#fff"
-                android:textSize="18sp" />
+            <!--<Button-->
+                <!--android:id="@+id/alarmBTN"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:onClick="onClick"-->
+                <!--android:switchMinWidth="65dp"-->
+                <!--android:text="@string/alarm"-->
+                <!--android:textColor="#fff"-->
+                <!--android:textSize="18sp" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+        <!--<LinearLayout-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
 
-            <!--Timer Button-->
-            <Button
-                android:id="@+id/timerBTN"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="@string/timer"
-                android:textSize="18sp"
-                android:onClick="onClick"
-                android:background="@color/colorPrimaryDark"
-                android:switchMinWidth="65dp"
-                android:textColor="#fff"/>
+            <!--&lt;!&ndash;Timer Button&ndash;&gt;-->
+            <!--<Button-->
+                <!--android:id="@+id/timerBTN"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="@string/timer"-->
+                <!--android:textSize="18sp"-->
+                <!--android:onClick="onClick"-->
+                <!--android:background="@color/colorPrimaryDark"-->
+                <!--android:switchMinWidth="65dp"-->
+                <!--android:textColor="#fff"/>-->
 
             <!--Weather button -->
             <Button
@@ -108,10 +109,11 @@
                 android:textColor="#fff"
                 android:textSize="20sp"
                 android:background="@color/purple"
-                android:onClick="onClick"/>
+                android:onClick="onClick"
+                android:layout_marginTop="30dp"/>
         </LinearLayout>
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 
 

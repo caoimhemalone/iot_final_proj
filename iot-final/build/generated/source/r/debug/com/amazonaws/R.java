@@ -20,39 +20,34 @@ public final class R {
   }
   public static final class id {
     public static final int activity_main=0x7f030000;
-    public static final int alarmBTN=0x7f030001;
-    public static final int btnConnect=0x7f030002;
-    public static final int btnDisconnect=0x7f030003;
-    public static final int btnPublish=0x7f030004;
-    public static final int btnSubscribe=0x7f030005;
-    public static final int btnlayout=0x7f030006;
-    public static final int clientLayout=0x7f030007;
-    public static final int clockBTN=0x7f030008;
-    public static final int infoBTN=0x7f030009;
-    public static final int lastmessagelayout=0x7f03000a;
-    public static final int linearLayout=0x7f03000b;
-    public static final int messageTV=0x7f03000c;
-    public static final int messagelayout=0x7f03000d;
-    public static final int seekBar=0x7f03000e;
-    public static final int sublayout=0x7f03000f;
-    public static final int tempBTN=0x7f030010;
-    public static final int time=0x7f030011;
-    public static final int timerBTN=0x7f030012;
-    public static final int title=0x7f030013;
-    public static final int topiclayout=0x7f030014;
-    public static final int tvClientId=0x7f030015;
-    public static final int tvLastMessage=0x7f030016;
-    public static final int tvStatus=0x7f030017;
-    public static final int tvlayout=0x7f030018;
-    public static final int txtMessage=0x7f030019;
-    public static final int txtSubcribe=0x7f03001a;
-    public static final int txtTopic=0x7f03001b;
+    public static final int btnConnect=0x7f030001;
+    public static final int btnDisconnect=0x7f030002;
+    public static final int btnPublish=0x7f030003;
+    public static final int btnSubscribe=0x7f030004;
+    public static final int btnlayout=0x7f030005;
+    public static final int clientLayout=0x7f030006;
+    public static final int clockBTN=0x7f030007;
+    public static final int infoBTN=0x7f030008;
+    public static final int lastmessagelayout=0x7f030009;
+    public static final int linearLayout=0x7f03000a;
+    public static final int messageTV=0x7f03000b;
+    public static final int messagelayout=0x7f03000c;
+    public static final int seekBar=0x7f03000d;
+    public static final int sublayout=0x7f03000e;
+    public static final int tempBTN=0x7f03000f;
+    public static final int time=0x7f030010;
+    public static final int title=0x7f030011;
+    public static final int topiclayout=0x7f030012;
+    public static final int tvClientId=0x7f030013;
+    public static final int tvLastMessage=0x7f030014;
+    public static final int tvStatus=0x7f030015;
+    public static final int tvlayout=0x7f030016;
+    public static final int txtMessage=0x7f030017;
+    public static final int txtSubcribe=0x7f030018;
+    public static final int txtTopic=0x7f030019;
   }
   public static final class layout {
     public static final int activity_main=0x7f040000;
-    public static final int alarm=0x7f040001;
-    public static final int select=0x7f040002;
-    public static final int timer=0x7f040003;
   }
   public static final class string {
     public static final int alarm=0x7f050000;

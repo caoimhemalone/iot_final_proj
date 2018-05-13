@@ -6,17 +6,5 @@
     {
         "merged": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/build/intermediates/res/merged/debug/drawable_ic_launcher.png.flat",
         "source": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/res/drawable/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/build/intermediates/res/merged/debug/layout_timer.xml.flat",
-        "source": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/res/layout/timer.xml"
-    },
-    {
-        "merged": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/build/intermediates/res/merged/debug/layout_alarm.xml.flat",
-        "source": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/res/layout/alarm.xml"
-    },
-    {
-        "merged": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/build/intermediates/res/merged/debug/layout_select.xml.flat",
-        "source": "/Users/caoimhemalone/Desktop/iot_final_proj/iot-final/res/layout/select.xml"
     }
 ]
